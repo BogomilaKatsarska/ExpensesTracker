@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from ExpensesTracker.core.profile_utils import get_profile
-from ExpensesTracker.expenses.forms import CreateExpenseForm, EditExpenseForm
+from ExpensesTracker.expenses.forms import CreateExpenseForm, EditExpenseForm, DeleteExpenseForm
 from ExpensesTracker.expenses.models import Expense
 
 
@@ -54,4 +54,14 @@ def edit_expense(request, pk):
 
 
 def delete_expense(request, pk):
-    pass
+    expense = Expense.objects.get(pk=pk)
+    if request.method == 'POST':
+        expense.delete()
+        return redirect('index')
+    else:
+        form = DeleteExpenseForm(instance=expense)
+    context = {
+        'form': form,
+        'expense': expense,
+    }
+    return render(request, 'expense-delete.html', context)
