@@ -54,6 +54,10 @@ def profile_delete(request):
     profile = get_profile()
     if request.method == 'POST':
         profile.delete()
+        Expense.objects.all().delete()
         return redirect('index')
 
-    return render(request, 'profile-delete.html')
+    context = {
+    }
+
+    return render(request, 'profile-delete.html', context)

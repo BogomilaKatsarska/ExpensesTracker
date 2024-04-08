@@ -10,11 +10,12 @@ class ExpenseForm(forms.ModelForm):
         model = Expense
         fields = '__all__'
 
-
-    def clean_price(self):
-        budget_left = get_profile().budget_left
-        if budget_left < float(self.cleaned_data['price']):
-            raise ValidationError('Not enough budget')
+    # def clean_price(self):
+    #     budget_left = get_profile().budget_left
+    #     price = float(self.cleaned_data['price'])
+    #     if budget_left < price:
+    #         raise ValidationError('Not enough budget')
+    #     return price
 
 
 class CreateExpenseForm(ExpenseForm):
